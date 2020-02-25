@@ -15,7 +15,7 @@ if [[ ! -d "server" ]]; then
 #!/bin/bash
 
 # Go to the server directory.
-BASEDIR=$(dirname "$0")
+BASEDIR=\$(dirname "$0")
 cd "\$BASEDIR" || return
 
 java -Xmx2G -Xms2G -jar paper.jar nogui
