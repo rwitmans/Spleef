@@ -1,0 +1,7 @@
+name: SpleefCie
+main: org.gamecie.spleefcie.SpleefCie
+description: "Spleef plugin for the GameCie server!"
+version: "v1.0.0"
+authors:
+  - "Hans Goor"
+  - "Rutger Witmans"
