@@ -31,3 +31,4 @@ UHCGC.iml
 !gradle/wrapper/gradle-wrapper.jar
 build/
 out/
+server/

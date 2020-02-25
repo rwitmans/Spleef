@@ -20,8 +20,21 @@ repositories {
     }
 }
 
+task runserver (type: Exec) {
+    commandLine 'bash', './server/run_server.sh'
+
+    standardInput(System.in)
+}
+
+task updateplugin(type: Copy) {
+    dependsOn jar
+
+    from 'out'
+    into { 'server/plugins' }
+}
+
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'junit', name: 'junit', version: '5.6'
     compileOnly 'org.spigotmc:spigot-api:1.14.4-R0.1-SNAPSHOT'
 }
 
