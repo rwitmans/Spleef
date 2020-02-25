@@ -2,6 +2,9 @@ plugins {
     id 'java'
 }
 
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
 repositories {
     mavenCentral()
     jcenter()
@@ -23,7 +26,10 @@ repositories {
 task runserver (type: Exec) {
     commandLine 'bash', './server/run_server.sh'
 
-    standardInput(System.in)
+    standardInput System.in
+    errorOutput System.err
+
+    ignoreExitValue true
 }
 
 task updateplugin(type: Copy) {
