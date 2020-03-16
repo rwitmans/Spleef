@@ -5,3 +5,8 @@ version: "v1.0.0"
 authors:
   - "Hans Goor"
   - "Rutger Witmans"
+
+commands:
+  arena:
+    usage: /<command>
+    description: usage of commands in SpleefCie
