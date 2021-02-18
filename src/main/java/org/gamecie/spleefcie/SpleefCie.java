@@ -1,23 +1,58 @@
 package org.gamecie.spleefcie;
 
-import org.bukkit.event.Listener;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.gamecie.spleefcie.commands.CreateArenaCMD;
+import org.eyedevelop.prometheus.abstracts.command.Command;
+import org.gamecie.spleefcie.arena.ArenaManager;
+import org.gamecie.spleefcie.commands.CommandSpleefCie;
+import org.gamecie.spleefcie.commands.SubCreate;
+import org.gamecie.spleefcie.commands.SubJoin;
 
 import java.util.HashMap;
 
-public class SpleefCie extends JavaPlugin implements Listener {
+public class SpleefCie extends JavaPlugin {
 
-    public HashMap<String, ArenaManager> arenaManagerHashMap = new HashMap<>();
     public static SpleefCie plugin;
 
-    @Override
-    public void onEnable() {
-        getLogger().info("Configuring SpleefCie");
+    public SpleefCie() {
         plugin = this;
-        plugin.saveConfig();
-        this.getServer().getPluginManager().registerEvents(this, this);
-        this.getCommand("arena").setExecutor(new CreateArenaCMD());
+    }
+    public void onLoad() {
+        super.onLoad();
     }
 
+    public void onEnable() {
+        super.onEnable();
+
+        if (!getDataFolder().exists()) {
+            getDataFolder().mkdir();
+        }
+
+        if (getConfig() == null) {
+            saveDefaultConfig();
+        }
+
+        new ArenaManager(this);
+        ArenaManager.getManager().loadGames();
+
+        getServer().getPluginManager().registerEvents(new GameListener(this), this);
+
+        Command commandSpleefCie = new CommandSpleefCie("spleef", "spleef.use");
+
+        new SubCreate("create", commandSpleefCie, "spleef.admin");
+        new SubJoin("join", commandSpleefCie, "spleef.use");
+        Bukkit.getPluginCommand("spleef").setExecutor(commandSpleefCie);
+
+        // Register Listeners.
+        Bukkit.getPluginManager().registerEvents(new GameListener(this), this);
+
+        getLogger().info("[SPLEEFCIE] LOADED AND ACTIVATED");
+
+    }
+
+    public void onDisable() {
+        super.onDisable();
+
+        saveConfig();
+    }
 }

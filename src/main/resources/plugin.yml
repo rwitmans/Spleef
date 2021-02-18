@@ -6,7 +6,10 @@ authors:
   - "Hans Goor"
   - "Rutger Witmans"
 
+depend:
+  - "EyePrometheus"
+
 commands:
-  arena:
-    usage: /<command>
-    description: usage of commands in SpleefCie
+  spleef:
+    usage: "/spleef help"
+    description: "usage of commands in SpleefCie"
