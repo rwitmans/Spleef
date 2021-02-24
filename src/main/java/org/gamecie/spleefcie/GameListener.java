@@ -75,6 +75,7 @@ public class GameListener implements Listener {
         if (e.getEntity() instanceof Player) {
             if (e.getCause().equals(EntityDamageEvent.DamageCause.LAVA)) {
                 ((Player) e.getEntity()).setGameMode(GameMode.SPECTATOR);
+                ((Player) e.getEntity()).sendMessage("You died");
             } else {
                 e.setCancelled(true);
             }
