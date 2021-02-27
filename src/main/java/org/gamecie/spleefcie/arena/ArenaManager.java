@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.gamecie.spleefcie.SpleefCie;
+import org.gamecie.spleefcie.player.SpleefPlayer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,7 +66,7 @@ public class ArenaManager {
             return;
         }
 
-        a.getPlayers().add(p);
+        a.getPlayers().add();
         inv.put(p, p.getInventory().getContents());
 
         p.getInventory().getContents();

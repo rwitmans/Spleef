@@ -8,8 +8,6 @@ import org.gamecie.spleefcie.commands.CommandSpleefCie;
 import org.gamecie.spleefcie.commands.SubCreate;
 import org.gamecie.spleefcie.commands.SubJoin;
 
-import java.util.HashMap;
-
 public class SpleefCie extends JavaPlugin {
 
     public static SpleefCie plugin;

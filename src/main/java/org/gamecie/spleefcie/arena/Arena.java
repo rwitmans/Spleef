@@ -1,16 +1,26 @@
 package org.gamecie.spleefcie.arena;
 
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.gamecie.spleefcie.player.SpleefPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Arena {
+public class Arena extends BukkitRunnable implements Listener {
 
     private int id;
+    private String name;
     private Location spawn;
-    List<Player> players = new ArrayList<>();
+    private boolean isOngoing;
+
+    private List<SpleefPlayer> playersInGame = new ArrayList<>();
+    List<SpleefPlayer> spectators = new ArrayList<>();
+    private List<Block> blocks = new ArrayList<>();
+
 
     public Arena(Location loc, int id) {
         this.spawn = loc;
@@ -29,13 +39,18 @@ public class Arena {
         return this.spawn;
     }
 
-    public List<Player> getPlayers() {
-        return this.players;
+    public List<SpleefPlayer> getPlayers() {
+        return this.playersInGame;
     }
 
     public void startGame() {
-        for (Player p : players) {
+        for (SpleefPlayer sp : playersInGame) {
 
         }
+    }
+
+    @Override
+    public void run() {
+
     }
 }

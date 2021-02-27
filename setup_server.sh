@@ -5,9 +5,9 @@ if [[ ! -d "server" ]]; then
   mkdir server
   cd server || return
 
-  # Download PaperMC 1.14.4
-  echo "Downloading PaperMC 1.14.4..."
-  curl -Lo paper.jar https://yivesmirror.com/files/paper/Paper-1.14.4-b243.jar &> /dev/null
+  # Download PaperMC 1.16.4-497
+  echo "Downloading PaperMC..."
+  curl -Lo paper.jar https://papermc.io/api/v2/projects/paper/versions/1.16.5/builds/497/downloads/paper-1.16.5-497.jar
 
   # Create the run script.
   echo "Making a run script..."
