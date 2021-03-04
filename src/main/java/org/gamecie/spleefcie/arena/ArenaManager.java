@@ -122,7 +122,7 @@ public class ArenaManager {
     }
 
     /**
-     * Used for readding all the arena's after reloading or restarting the server.
+     * Used for reading all the arena's after reloading or restarting the server.
      *
      * @param l The location of the arena.
      * @return The reloaded arena.

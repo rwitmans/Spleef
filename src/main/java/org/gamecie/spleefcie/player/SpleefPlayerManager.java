@@ -7,6 +7,7 @@ import org.gamecie.spleefcie.SpleefCie;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.logging.Level;
 
 public class SpleefPlayerManager {
@@ -37,6 +38,11 @@ public class SpleefPlayerManager {
             return spleefPlayerHashMap.get(p);
         }
         return registerPlayer(p);
+    }
+
+    public SpleefPlayer getSpleefPlayer(UUID uuid) {
+        OfflinePlayer p = Bukkit.getOfflinePlayer(uuid);
+        return getSpleefPlayer(p);
     }
 
     public HashMap<OfflinePlayer, SpleefPlayer> getSpleefPlayerHashMap() {

@@ -10,6 +10,7 @@ public class SpleefPlayer {
     private final SpleefCie plugin;
     private Arena currentArena;
     private final UUID uuid;
+    private boolean inArena = false;
 
     public Arena getCurrentArena() {
         return currentArena;
@@ -17,6 +18,14 @@ public class SpleefPlayer {
 
     public UUID getUuid() {
         return uuid;
+    }
+
+    public boolean isInArena() {
+        return inArena;
+    }
+
+    public void toggleInArena() {
+        this.inArena = !this.inArena;
     }
 
     public void setCurrentArena(Arena currentArena) {

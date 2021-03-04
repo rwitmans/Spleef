@@ -12,12 +12,14 @@ import org.gamecie.spleefcie.player.SpleefPlayerManager;
 public class SpleefCie extends JavaPlugin {
 
     private SpleefPlayerManager spleefPlayerManager;
-    public void onLoad() {
-        super.onLoad();
-    }
+    private ArenaManager arenaManager;
 
     public SpleefPlayerManager getSpleefPlayerManager() {
         return spleefPlayerManager;
+    }
+
+    public void onLoad() {
+        super.onLoad();
     }
 
     public void onEnable() {
@@ -31,7 +33,7 @@ public class SpleefCie extends JavaPlugin {
             saveDefaultConfig();
         }
 
-        new ArenaManager(this);
+        this.arenaManager = new ArenaManager(this);
         this.spleefPlayerManager = new SpleefPlayerManager(this);
 
         ArenaManager.getManager().loadGames();
