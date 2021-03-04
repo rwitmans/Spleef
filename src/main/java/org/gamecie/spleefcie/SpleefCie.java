@@ -7,16 +7,17 @@ import org.gamecie.spleefcie.arena.ArenaManager;
 import org.gamecie.spleefcie.commands.CommandSpleefCie;
 import org.gamecie.spleefcie.commands.SubCreate;
 import org.gamecie.spleefcie.commands.SubJoin;
+import org.gamecie.spleefcie.player.SpleefPlayerManager;
 
 public class SpleefCie extends JavaPlugin {
 
-    public static SpleefCie plugin;
-
-    public SpleefCie() {
-        plugin = this;
-    }
+    private SpleefPlayerManager spleefPlayerManager;
     public void onLoad() {
         super.onLoad();
+    }
+
+    public SpleefPlayerManager getSpleefPlayerManager() {
+        return spleefPlayerManager;
     }
 
     public void onEnable() {
@@ -31,9 +32,11 @@ public class SpleefCie extends JavaPlugin {
         }
 
         new ArenaManager(this);
+        this.spleefPlayerManager = new SpleefPlayerManager(this);
+
         ArenaManager.getManager().loadGames();
 
-        getServer().getPluginManager().registerEvents(new GameListener(this), this);
+        getServer().getPluginManager().registerEvents(new SpleefListener(this), this);
 
         Command commandSpleefCie = new CommandSpleefCie("spleef", "spleef.use");
 
@@ -42,7 +45,7 @@ public class SpleefCie extends JavaPlugin {
         Bukkit.getPluginCommand("spleef").setExecutor(commandSpleefCie);
 
         // Register Listeners.
-        Bukkit.getPluginManager().registerEvents(new GameListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new SpleefListener(this), this);
 
         getLogger().info("[SPLEEFCIE] LOADED AND ACTIVATED");
 

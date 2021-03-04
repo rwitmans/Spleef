@@ -24,7 +24,7 @@ public class ArenaManager {
     private List<Arena> arenas = new ArrayList<>();
     private int arenaSize = 0;
 
-    static SpleefCie plugin;
+    private static SpleefCie plugin;
 
     public ArenaManager(SpleefCie plugin) {
         this.plugin = plugin;

@@ -15,22 +15,29 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameListener implements Listener {
+public class SpleefListener implements Listener {
 
     private static List<Player> players = new ArrayList<>();
     private static SpleefCie plugin;
 
-    public GameListener(SpleefCie plugin) {
+    public SpleefListener(SpleefCie plugin) {
         this.plugin = plugin;
     }
 
     public void addPlayer(Player p) {
         players.add(p);
+    }
+
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent e) {
+        Player p = e.getPlayer();
+        plugin.getSpleefPlayerManager().registerPlayer(p);
     }
 
     @EventHandler

@@ -1,5 +1,6 @@
 package org.gamecie.spleefcie.arena;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -14,7 +15,7 @@ public class Arena extends BukkitRunnable implements Listener {
 
     private int id;
     private String name;
-    private Location spawn;
+    private Location arenaSpawn;
     private boolean isOngoing;
 
     private List<SpleefPlayer> playersInGame = new ArrayList<>();
@@ -23,7 +24,7 @@ public class Arena extends BukkitRunnable implements Listener {
 
 
     public Arena(Location loc, int id) {
-        this.spawn = loc;
+        this.arenaSpawn = loc;
         this.id = id;
     }
 
@@ -36,7 +37,7 @@ public class Arena extends BukkitRunnable implements Listener {
     }
 
     public Location getSpawn() {
-        return this.spawn;
+        return this.arenaSpawn;
     }
 
     public List<SpleefPlayer> getPlayers() {
@@ -45,7 +46,7 @@ public class Arena extends BukkitRunnable implements Listener {
 
     public void startGame() {
         for (SpleefPlayer sp : playersInGame) {
-
+            Bukkit.getPlayer(sp.getUuid()).teleport(arenaSpawn);
         }
     }
 
