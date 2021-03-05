@@ -14,8 +14,8 @@ import java.util.Map;
 
 public class ArenaManager {
 
-    // Save where the player is teleported
-    private Map<Player, Location> locs = new HashMap<>();
+    private final int DEFAULT_MIN_PLAYERS = plugin.getConfig().getInt("Default.MinPlayers");
+
     // Make a new instance of the class
     private static ArenaManager am = new ArenaManager();
     // Inventory of the player
@@ -60,27 +60,23 @@ public class ArenaManager {
      * @param i The id of the arena the player wants to join.
      */
     public void addPlayer(Player p, int i) {
+        SpleefPlayer splayer = plugin.getSpleefPlayerManager().getSpleefPlayer(p.getUniqueId());
         Arena a = getArena(i);
         if (a == null) {
             p.sendMessage("Invalid arena");
             return;
         }
 
-        a.getPlayers().add();
         inv.put(p, p.getInventory().getContents());
-
-        p.getInventory().getContents();
         p.getInventory().clear();
 
-        locs.put(p, p.getLocation());
-        p.teleport(a.getSpawn());
+        a.addPlayer(splayer);
     }
 
     /**
      * Remove player p from the arena with id i
      *
      * @param p The player to remove.
-     * @param i The id of the arena the player needs to be removed from.
      */
     public void removePlayer(Player p) {
         Arena a = null;
@@ -94,22 +90,18 @@ public class ArenaManager {
             return;
         }
 
-        a.getPlayers().remove(p);
-
         p.getInventory().clear();
 
         p.getInventory().setContents(inv.get(p));
 
         inv.remove(p);
-        p.teleport(locs.get(p));
-        locs.remove(p);
     }
 
-    public Arena createArena(Location l) {
+    public Arena createArena(Location l, int minPlayers) {
         int num = arenaSize + 1;
         arenaSize++;
 
-        Arena a = new Arena(l, num);
+        Arena a = new Arena(plugin, l, num, minPlayers);
         arenas.add(a);
 
         plugin.getConfig().set("Arenas." + num, serializeLoc(l));
@@ -119,6 +111,10 @@ public class ArenaManager {
         plugin.saveConfig();
 
         return a;
+    }
+
+    public Arena createArena(Location l) {
+        return createArena(l, DEFAULT_MIN_PLAYERS);
     }
 
     /**
@@ -131,7 +127,8 @@ public class ArenaManager {
         int num = arenaSize + 1;
         arenaSize++;
 
-        Arena a = new Arena(l, num);
+        int minPlayers = plugin.getConfig().getInt("Arena.Timer");
+        Arena a = new Arena(plugin, l, num, minPlayers);
         arenas.add(a);
 
         return a;
@@ -149,15 +146,6 @@ public class ArenaManager {
         list.remove(i);
         plugin.getConfig().set("Arenas.Arenas", list);
         plugin.saveConfig();
-    }
-
-    public boolean isInGame(Player p) {
-        for (Arena a : arenas) {
-            if (a.getPlayers().contains(p)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public void loadGames() {

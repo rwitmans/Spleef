@@ -18,6 +18,10 @@ public class SpleefCie extends JavaPlugin {
         return spleefPlayerManager;
     }
 
+    public ArenaManager getArenaManager() {
+        return arenaManager;
+    }
+
     public void onLoad() {
         super.onLoad();
     }
@@ -31,6 +35,9 @@ public class SpleefCie extends JavaPlugin {
 
         if (getConfig() == null) {
             saveDefaultConfig();
+            getConfig().addDefault("Default.MinPlayers", 2);
+            getConfig().addDefault("Timer.Start", 10);
+
         }
 
         this.arenaManager = new ArenaManager(this);

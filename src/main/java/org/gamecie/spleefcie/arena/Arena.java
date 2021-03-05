@@ -40,7 +40,7 @@ public class Arena extends BukkitRunnable {
         this.lobbySpawn = Bukkit.getWorld("world").getSpawnLocation();
         this.minPlayers = minPlayers;
 
-        this.runTaskTimer(plugin, 20, 20)
+        this.runTaskTimer(plugin, 20, 20);
     }
 
     public ArenaStatus getArenaStatus() {
@@ -72,7 +72,7 @@ public class Arena extends BukkitRunnable {
     }
 
     public void startGame() {
-        gameStartTimer = plugin.getConfig().getInt("timer.start");
+        gameStartTimer = plugin.getConfig().getInt("Timer.Start");
         arenaStatus = ArenaStatus.ONGOING;
         for (SpleefPlayer splayer : playersInGame) {
             Player player = Bukkit.getPlayer(splayer.getUuid());
@@ -114,16 +114,34 @@ public class Arena extends BukkitRunnable {
         player.setFoodLevel(20);
         player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
         splayer.setCurrentArena(this);
+        splayer.toggleInArena();
         player.teleport(arenaSpawn);
+        return true;
     }
 
     public void removePlayer(SpleefPlayer splayer) {
-        //Remove player from the arena.
+        Player player = Bukkit.getPlayer(splayer.getUuid());
+        player.teleport(arenaSpawn);
+        player.setGameMode(GameMode.SURVIVAL);
+        player.getInventory().clear();
+        player.setFoodLevel(20);
+        player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
+        splayer.setCurrentArena(null);
+        splayer.toggleInArena();
+        plugin.getArenaManager().removePlayer(player);
     }
 
     public void makeLose(SpleefPlayer splayer) {
-        //Put checkwin here.
-        //make the player lose
+        playersInGame.remove(splayer);
+
+        Player loser = Bukkit.getPlayer(splayer.getUuid());
+        loser.sendMessage("You died");
+
+        spectators.add(splayer);
+        loser.teleport(arenaSpawn);
+        loser.setGameMode(GameMode.SPECTATOR);
+
+        checkWin();
     }
 
     public void checkWin() {
@@ -155,7 +173,7 @@ public class Arena extends BukkitRunnable {
                     gameStartTimer--;
                 }
             } else {
-                gameStartTimer = plugin.getConfig().getInt("timer.start");
+                gameStartTimer = plugin.getConfig().getInt("Timer.Start");
             }
         } else {
             if (playersInGame.size() == 0) {
